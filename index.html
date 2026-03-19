@@ -15,36 +15,52 @@ body {
 .container {
     max-width: 500px;
     margin: auto;
-    background: #fff;
+}
+
+/* VIDEO */
+.video-wrapper { padding: 12px; }
+
+.video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
     border-radius: 16px;
     overflow: hidden;
+    background: #000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+.video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sound-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 999px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* CARD */
+.card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.08);
 }
 
-.video {
-    height: 220px;
-    background: #ddd;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.content { padding:20px; }
-
-.tag {
-    color:#e63946;
-    font-weight:bold;
-    font-size:12px;
-}
-
+.tag { color:#e63946; font-weight:bold; font-size:12px; }
 h1 { font-size:22px; }
+.desc { color:#555; line-height:1.5; }
 
-.desc {
-    color:#555;
-    line-height:1.5;
-}
-
-/* PROGRESS */
 .progress {
     height:10px;
     background:#eee;
@@ -57,11 +73,6 @@ h1 { font-size:22px; }
     height:100%;
     background: linear-gradient(90deg, #2ecc71, #27ae60);
     width:28%;
-    animation: grow 1.5s ease-out;
-}
-
-@keyframes grow {
-    from { width:0; }
 }
 
 .amounts {
@@ -70,7 +81,6 @@ h1 { font-size:22px; }
     font-size:14px;
 }
 
-/* COUNTDOWN */
 .countdown {
     background:#fff3f3;
     color:#c0392b;
@@ -81,7 +91,6 @@ h1 { font-size:22px; }
     margin:15px 0;
 }
 
-/* BUTTONS */
 .buttons {
     display:grid;
     gap:12px;
@@ -102,6 +111,7 @@ h1 { font-size:22px; }
 
 .highlight {
     border:2px solid #6c5ce7 !important;
+    background:#f6f4ff;
 }
 
 .badge {
@@ -119,7 +129,6 @@ h1 { font-size:22px; }
 .price { font-size:18px; font-weight:bold; }
 .label { font-size:13px; opacity:0.8; }
 
-/* DONORS */
 .section-title {
     font-size:14px;
     font-weight:bold;
@@ -127,6 +136,7 @@ h1 { font-size:22px; }
     margin-bottom:10px;
 }
 
+/* DONATIONS */
 #donors {
     height:150px;
     overflow:hidden;
@@ -138,42 +148,25 @@ h1 { font-size:22px; }
 .donor {
     display:flex;
     justify-content:space-between;
-    align-items:center;
     padding:10px;
     border-radius:10px;
     background:#fafafa;
-}
-
-.donor-left {
-    display:flex;
-    flex-direction:column;
-}
-
-.name {
     font-size:14px;
-    font-weight:500;
 }
 
-.time {
-    font-size:12px;
-    color:#888;
+.donor small {
+    display:block;
+    font-size:11px;
+    opacity:0.6;
 }
 
-.amount {
-    font-weight:bold;
-}
-
-/* CO-ORGANIZERS */
+/* ORGANIZERS */
 .organizers {
     margin-top:20px;
     padding:12px;
     background:#fafafa;
     border-radius:10px;
-}
-
-.organizer {
     font-size:14px;
-    margin-bottom:6px;
 }
 
 /* CTA */
@@ -194,15 +187,20 @@ h1 { font-size:22px; }
 <body>
 
 <div class="container">
-    
-<div class="video">
-    <video width="100%" height="100%" autoplay muted playsinline loop controls>
-        <source src="https://saveliamlife.vercel.app/compressed.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+
+<div class="video-wrapper">
+    <div class="video">
+        <video id="video" autoplay muted playsinline loop>
+            <source src="https://saveliamlife.vercel.app/compressed.mp4">
+        </video>
+
+        <button class="sound-btn" onclick="toggleSound()" id="soundBtn">
+            🔇 Tap for sound
+        </button>
+    </div>
 </div>
 
-<div class="content">
+<div class="card">
 
 <div class="tag">🚨 EMERGENCY</div>
 
@@ -212,63 +210,58 @@ h1 { font-size:22px; }
 Liam needs urgent surgery. Without it, he may not survive.
 </p>
 
-<div class="progress">
-    <div class="bar" id="bar"></div>
-</div>
+<div class="progress"><div class="bar"></div></div>
 
 <div class="amounts">
-    <strong id="raised">$68,600</strong>
-    <span>$245,000 goal</span>
+<strong>$68,600</strong>
+<span>$245,000 goal</span>
 </div>
 
-<div class="countdown" id="countdown">
-    Surgery must happen within 5 days
-</div>
+<div class="countdown">Surgery must happen within 5 days</div>
 
 <div class="buttons">
 <a href="https://donate.stripe.com/9B69AS7XHbXG7ct8Kkc3m07">
-    <span class="price">💙 $10</span>
-    <span class="label">1 hour of breathing support</span>
+<span class="price">💙 $10</span>
+<span class="label">1 hour of breathing support</span>
 </a>
 
 <a href="https://donate.stripe.com/5kQ4gyem58Lu0O54u4c3m08">
-    <span class="price">🙏 $25</span>
-    <span class="label">Essential medication support</span>
+<span class="price">🙏 $25</span>
+<span class="label">Essential medication support</span>
 </a>
 
 <a href="https://donate.stripe.com/5kQfZg5PzgdW54lf8Ic3m09" class="highlight">
-    <div class="badge">MOST CHOSEN</div>
-    <span class="price">⭐ $50</span>
-    <span class="label">Critical medical exam</span>
+<div class="badge">MOST CHOSEN</div>
+<span class="price">⭐ $50</span>
+<span class="label">Critical medical exam</span>
 </a>
 
 <a href="https://donate.stripe.com/bJe4gygud6DmdAR6Ccc3m0a">
-    <span class="price">❤️ $100</span>
-    <span class="label">Life-saving surgery fund</span>
+<span class="price">❤️ $100</span>
+<span class="label">Life-saving surgery fund</span>
 </a>
 
 <a href="https://donate.stripe.com/5kQeVcgudgdWaoFgcMc3m0b">
-    <span class="price">🏥 $250</span>
-    <span class="label">Major surgery support</span>
+<span class="price">🏥 $250</span>
+<span class="label">Major surgery support</span>
 </a>
 
 <a href="https://donate.stripe.com/3cIeVcem53ra54l4u4c3m0c">
-    <span class="price">✨ Other</span>
-    <span class="label">Choose your impact</span>
+<span class="price">✨ Other</span>
+<span class="label">Choose your impact</span>
 </a>
 </div>
 
 <div class="section-title">Recent Donations</div>
 <div id="donors"></div>
 
-<div class="section-title">Co-organizers</div>
 <div class="organizers">
-    <div class="organizer">Emily Carter (Mother)</div>
-    <div class="organizer">Daniel Carter (Father)</div>
-    <div class="organizer">St. Mary Children's Hospital</div>
+<strong>Emily Carter (Mother)</strong><br>
+Daniel Carter (Father)<br>
+St. Mary Children's Hospital
 </div>
 
-<a class="donate-btn" href="#">
+<a class="donate-btn" href="https://donate.stripe.com/5kQfZg5PzgdW54lf8Ic3m09">
 Help Him Breathe Now
 </a>
 
@@ -276,85 +269,54 @@ Help Him Breathe Now
 </div>
 
 <script>
-let goal = 245000;
-let raised = 68600;
-
-const names = ["Emily","James","Olivia","Liam","Sophia","Noah","Lucas","Mia","Ethan","Ava"];
-const amounts = [10,25,50,100,250];
-
-function timeAgo() {
-    let t = Math.floor(Math.random()*300);
-    if(t < 60) return t + "s ago";
-    return Math.floor(t/60) + "m ago";
+function toggleSound(){
+    const video = document.getElementById("video");
+    const btn = document.getElementById("soundBtn");
+    video.muted = !video.muted;
+    btn.innerHTML = video.muted ? "🔇 Tap for sound" : "🔊 Sound on";
 }
 
-function updateUI() {
-    let percent = (raised/goal)*100;
-    document.getElementById("bar").style.width = percent + "%";
-    document.getElementById("raised").innerText = "$" + raised.toLocaleString();
+const donorsData = [
+ {name:"Olivia 🇺🇸", amount:37},
+ {name:"Lucas 🇧🇷", amount:68},
+ {name:"Sophie 🇫🇷", amount:52},
+ {name:"Noah 🇨🇦", amount:41},
+ {name:"Emma 🇬🇧", amount:75},
+ {name:"Mateo 🇲🇽", amount:63},
+ {name:"Lina 🇩🇪", amount:29},
+ {name:"Yuki 🇯🇵", amount:54}
+];
+
+const container = document.getElementById("donors");
+
+function getTime(){
+    const min = Math.floor(Math.random()*9)+1;
+    return `${min}m ago`;
 }
 
-function createDonation(name, amount) {
-    let div = document.createElement("div");
-    div.className = "donor";
-    div.innerHTML = `
-        <div class="donor-left">
-            <span class="name">${name}</span>
-            <span class="time">${timeAgo()}</span>
+let list = [...donorsData, ...donorsData];
+
+list.forEach(d=>{
+    const el = document.createElement("div");
+    el.className="donor";
+    el.innerHTML=`
+        <div>
+            ${d.name}
+            <small>${getTime()}</small>
         </div>
-        <span class="amount">$${amount}</span>
+        <strong>$${d.amount}</strong>
     `;
-    return div;
+    container.appendChild(el);
+});
+
+let y=0;
+function scroll(){
+    y+=0.3;
+    container.scrollTop=y;
+    if(y>=container.scrollHeight/2){ y=0; }
+    requestAnimationFrame(scroll);
 }
-
-function seedDonors() {
-    let container = document.getElementById("donors");
-    for(let i=0;i<3;i++){
-        let name = names[Math.floor(Math.random()*names.length)];
-        let amount = amounts[Math.floor(Math.random()*amounts.length)];
-        container.appendChild(createDonation(name, amount));
-    }
-}
-
-function newDonation() {
-    let name = names[Math.floor(Math.random()*names.length)];
-    let amount = amounts[Math.floor(Math.random()*amounts.length)];
-    raised += amount;
-
-    let container = document.getElementById("donors");
-    container.appendChild(createDonation(name, amount));
-
-    if(container.children.length > 10){
-        container.removeChild(container.firstChild);
-    }
-
-    updateUI();
-}
-
-function autoScroll() {
-    let container = document.getElementById("donors");
-    container.scrollTop += 0.4;
-
-    if(container.scrollTop >= container.scrollHeight - container.clientHeight){
-        container.scrollTop = 0;
-    }
-}
-
-seedDonors();
-updateUI();
-
-setInterval(newDonation, 3000);
-setInterval(autoScroll, 30);
-
-let timeLeft = 5 * 24 * 60 * 60;
-
-setInterval(() => {
-    timeLeft--;
-    let d = Math.floor(timeLeft/86400);
-    let h = Math.floor((timeLeft%86400)/3600);
-    document.getElementById("countdown").innerText =
-    `Surgery must happen in ${d}d ${h}h`;
-}, 1000);
+scroll();
 </script>
 
 </body>
