@@ -12,12 +12,8 @@ body {
     background: #f4f6f8;
 }
 
-.container {
-    max-width: 500px;
-    margin: auto;
-}
+.container { max-width: 500px; margin: auto; }
 
-/* VIDEO */
 .video-wrapper { padding: 12px; }
 
 .video {
@@ -49,7 +45,6 @@ body {
     cursor: pointer;
 }
 
-/* CARD */
 .card {
     background: #fff;
     border-radius: 16px;
@@ -73,6 +68,7 @@ h1 { font-size:22px; }
     height:100%;
     background: linear-gradient(90deg, #2ecc71, #27ae60);
     width:28%;
+    transition: width 0.5s ease;
 }
 
 .amounts {
@@ -136,7 +132,6 @@ h1 { font-size:22px; }
     margin-bottom:10px;
 }
 
-/* DONATIONS */
 #donors {
     height:150px;
     overflow:hidden;
@@ -160,7 +155,6 @@ h1 { font-size:22px; }
     opacity:0.6;
 }
 
-/* ORGANIZERS */
 .organizers {
     margin-top:20px;
     padding:12px;
@@ -169,7 +163,6 @@ h1 { font-size:22px; }
     font-size:14px;
 }
 
-/* CTA */
 .donate-btn {
     display:block;
     background:#e63946;
@@ -210,46 +203,25 @@ h1 { font-size:22px; }
 Liam needs urgent surgery. Without it, he may not survive.
 </p>
 
-<div class="progress"><div class="bar"></div></div>
+<div class="progress"><div class="bar" id="bar"></div></div>
 
 <div class="amounts">
-<strong>$68,600</strong>
+<strong id="raised">$68,600</strong>
 <span>$245,000 goal</span>
 </div>
 
 <div class="countdown">Surgery must happen within 5 days</div>
 
 <div class="buttons">
-<a href="https://donate.stripe.com/9B69AS7XHbXG7ct8Kkc3m07">
-<span class="price">💙 $10</span>
-<span class="label">1 hour of breathing support</span>
-</a>
-
-<a href="https://donate.stripe.com/5kQ4gyem58Lu0O54u4c3m08">
-<span class="price">🙏 $25</span>
-<span class="label">Essential medication support</span>
-</a>
-
+<a href="https://donate.stripe.com/9B69AS7XHbXG7ct8Kkc3m07"><span class="price">💙 $10</span><span class="label">1 hour of breathing support</span></a>
+<a href="https://donate.stripe.com/5kQ4gyem58Lu0O54u4c3m08"><span class="price">🙏 $25</span><span class="label">Essential medication support</span></a>
 <a href="https://donate.stripe.com/5kQfZg5PzgdW54lf8Ic3m09" class="highlight">
 <div class="badge">MOST CHOSEN</div>
-<span class="price">⭐ $50</span>
-<span class="label">Critical medical exam</span>
+<span class="price">⭐ $50</span><span class="label">Critical medical exam</span>
 </a>
-
-<a href="https://donate.stripe.com/bJe4gygud6DmdAR6Ccc3m0a">
-<span class="price">❤️ $100</span>
-<span class="label">Life-saving surgery fund</span>
-</a>
-
-<a href="https://donate.stripe.com/5kQeVcgudgdWaoFgcMc3m0b">
-<span class="price">🏥 $250</span>
-<span class="label">Major surgery support</span>
-</a>
-
-<a href="https://donate.stripe.com/3cIeVcem53ra54l4u4c3m0c">
-<span class="price">✨ Other</span>
-<span class="label">Choose your impact</span>
-</a>
+<a href="https://donate.stripe.com/bJe4gygud6DmdAR6Ccc3m0a"><span class="price">❤️ $100</span><span class="label">Life-saving surgery fund</span></a>
+<a href="https://donate.stripe.com/5kQeVcgudgdWaoFgcMc3m0b"><span class="price">🏥 $250</span><span class="label">Major surgery support</span></a>
+<a href="https://donate.stripe.com/3cIeVcem53ra54l4u4c3m0c"><span class="price">✨ Other</span><span class="label">Choose your impact</span></a>
 </div>
 
 <div class="section-title">Recent Donations</div>
@@ -276,6 +248,26 @@ function toggleSound(){
     btn.innerHTML = video.muted ? "🔇 Tap for sound" : "🔊 Sound on";
 }
 
+/* ===== PROGRESS DINÂMICO ===== */
+let raised = 68600;
+const goal = 245000;
+
+function updateProgress(){
+    const increment = Math.floor(Math.random()*120)+20;
+    raised += increment;
+
+    if(raised > goal) raised = goal;
+
+    document.getElementById("raised").innerText =
+        "$" + raised.toLocaleString();
+
+    const percent = (raised / goal) * 100;
+    document.getElementById("bar").style.width = percent + "%";
+}
+
+setInterval(updateProgress, 2000);
+
+/* ===== DONATIONS ===== */
 const donorsData = [
  {name:"Olivia 🇺🇸", amount:37},
  {name:"Lucas 🇧🇷", amount:68},
